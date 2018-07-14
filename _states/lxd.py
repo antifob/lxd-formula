@@ -130,10 +130,6 @@ def init(storage_backend='dir', trust_password=None, network_address=None,
     if __opts__['test']:
         return _success(ret, 'Would initialize LXD')
 
-    # We always touch the done_file, so when LXD is already initialized
-    # we don't run this over and over.
-    __salt__['file.touch'](done_file)
-
     try:
         __salt__['lxd.init'](
             storage_backend if storage_backend else None,
@@ -146,6 +142,8 @@ def init(storage_backend='dir', trust_password=None, network_address=None,
         )
     except CommandExecutionError as e:
         return _error(ret, six.text_type(e))
+
+    __salt__['file.touch'](done_file)
 
     return _success(ret, 'Initialized the LXD Daemon')
 
