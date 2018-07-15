@@ -1652,7 +1652,7 @@ def container_file_put(name, src, dst, recursive=False, overwrite=False,
             if gid is None:
                 gid = stat.st_gid
 
-        with salt.utils.fopen(src, 'rb') as src_fp:
+        with salt.utils.files.fopen(src, 'rb') as src_fp:
             container.files.put(
                 dst, src_fp.read(),
                 mode=mode, uid=uid, gid=gid
@@ -1720,7 +1720,7 @@ def container_file_put(name, src, dst, recursive=False, overwrite=False,
                 if gid is None:
                     set_gid = stat.st_gid
 
-            with salt.utils.fopen(src_name, 'rb') as src_fp:
+            with salt.utils.files.fopen(src_name, 'rb') as src_fp:
                 container.files.put(
                     dst_name, src_fp.read(),
                     mode=set_mode, uid=set_uid, gid=set_gid
@@ -1822,7 +1822,7 @@ def container_file_get(name, src, dst, overwrite=False,
         # Seems to be duplicate of line 1794, produces /path/file_name/file_name
         #dst = os.path.join(dst, os.path.basename(src))
 
-    with salt.utils.fopen(dst, 'wb') as df:
+    with salt.utils.files.fopen(dst, 'wb') as df:
         df.write(container.files.get(src))
 
     if mode:
@@ -2953,7 +2953,7 @@ def image_from_file(filename,
 
     cached_file = __salt__['cp.cache_file'](filename, saltenv=saltenv)
     data = b''
-    with salt.utils.fopen(cached_file, 'r+b') as fp:
+    with salt.utils.files.fopen(cached_file, 'r+b') as fp:
         data = fp.read()
 
     client = pylxd_client_get(remote_addr, cert, key, verify_cert)
