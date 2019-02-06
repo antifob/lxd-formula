@@ -10,6 +10,10 @@ lxd_lxd:
     {{ sls_block(datamap.lxd.package.opts )}}
     - pkgs: {{ datamap.lookup.lxd.packages }}
 
+lxd_running:
+  service.running:
+    - name: lxd
+
 {% if datamap.lxd.run_init %}
   lxd:
     - init
