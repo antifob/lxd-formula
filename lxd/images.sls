@@ -32,7 +32,7 @@ lxd_image_{{ remotename }}_{{ name }}:
         {%- endif %}
         {%- for k in ('source', 'aliases', 'public', 'auto_update',) %}
           {%- if k in image %}
-    - {{ k }}: {{ image[k] }}
+    - {{ k }}: {{ image[k] |yaml }}
           {%- endif %}
         {%- endfor %}
         {%- if remote %}
